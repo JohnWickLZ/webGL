@@ -54,13 +54,32 @@ window.onload = function init() {
     gl.vertexAttribPointer(a_color, 3, gl.FLOAT, false, FSIZE * 6, FSIZE * 3);
     gl.enableVertexAttribArray(a_pos);
     gl.enableVertexAttribArray(a_color);
-
-    var viewMatrix = new Matrix4();
-    viewMatrix.setLookAt(0.2, 0.25, 0.25,   0.0, 0.0, 0.0,    0.0, 1.0, 0.0);
-    //viewMatrix.setLookAt(0.0, 0.0, 0.25,   0.0, 0.0, 0.0,    0.0, 1.0, 0.0);
-    var u_ViewMatrix  = gl.getUniformLocation(program, 'u_ViewMatrix');
-    gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
-
-    gl.clear( gl.COLOR_BUFFER_BIT );
-    this.gl.drawArrays(gl.TRIANGLES, 0, 9);
+    var x = 0.0;
+    var y = 0.0;
+    var z = 0.25;
+    function run(){
+        var viewMatrix = new Matrix4();
+        console.log('x : ' + x +'  y : ' + y +'  z : ' + z)
+        viewMatrix.setLookAt(x, y, z,   0.0, 0.0, 0.0,    0.0, 1.0, 0.0);
+        var u_ViewMatrix  = gl.getUniformLocation(program, 'u_ViewMatrix');
+        gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
+        gl.clear( gl.COLOR_BUFFER_BIT );
+        this.gl.drawArrays(gl.TRIANGLES, 0, 9);
+    }
+    run();
+    window.onkeydown = function(e){
+        if(37 === e.keyCode){
+            x-=0.01;
+        }
+        if(39 === e.keyCode){
+            x+=0.01;
+        }
+        if(38 === e.keyCode){
+            y-=0.01;
+        }
+        if(40 === e.keyCode){
+            y+=0.01;
+        }
+        run();
+    }
 }
