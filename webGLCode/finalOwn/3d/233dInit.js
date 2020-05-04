@@ -57,6 +57,7 @@ window.onload = function init() {
 
     var viewMatrix = new Matrix4();
     viewMatrix.setLookAt(0.2, 0.25, 0.25,   0.0, 0.0, 0.0,    0.0, 1.0, 0.0);
+    //viewMatrix.setLookAt(0.0, 0.0, 0.25,   0.0, 0.0, 0.0,    0.0, 1.0, 0.0);
     var u_ViewMatrix  = gl.getUniformLocation(program, 'u_ViewMatrix');
     gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements)
 
