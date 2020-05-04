@@ -47,18 +47,30 @@ window.onload = function init() {
     //     0.0, 0.0, 1.0, 0.0,
     //     Tx, Ty, Tz, 1.0
     // ]);
-    var Tx = 1.0;
-    var Ty = 1.0;
-    var Tz = 1.0;
-    // 缩放矩阵
-    var dataMatrix = new this.Float32Array([
-        Tx, 0.0, 0.0, 0.0,
-        0.0, Ty, 0.0, 0.0,
-        0.0, 0.0, Tz, 0.0,
-        0.0, 0.0, 0.0, 1.0
-    ]);
+
+    // var Tx = 1.0;
+    // var Ty = 1.0;
+    // var Tz = 1.0;
+    // // 缩放矩阵
+    // var dataMatrix = new this.Float32Array([
+    //     Tx, 0.0, 0.0, 0.0,
+    //     0.0, Ty, 0.0, 0.0,
+    //     0.0, 0.0, Tz, 0.0,
+    //     0.0, 0.0, 0.0, 1.0
+    // ]);
+
+    var angle = 0.0;
     var u_change = gl.getUniformLocation(program, 'u_change');
     function run(){
+        var sinB = Math.sin(Math.PI * angle / 180);
+        var cosB = Math.cos(Math.PI * angle / 180);
+        // 缩放矩阵
+        var dataMatrix = new this.Float32Array([
+            cosB, sinB, 0.0, 0.0,
+            -sinB, cosB, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0
+        ]);
         gl.uniformMatrix4fv(u_change, false, dataMatrix)
         gl.clearColor(0,0,1,1);
         gl.clear( gl.COLOR_BUFFER_BIT );
@@ -68,17 +80,19 @@ window.onload = function init() {
 
     window.onkeydown = function(e){
         if(37 === e.keyCode){
-            Tx-=0.01;
+            angle += 1.0;
+            //Tx-=0.01;
         }
         if(39 === e.keyCode){
-            Tx+=0.01;
+            angle -= 1.0;
+            //Tx+=0.01;
         }
-        if(38 === e.keyCode){
-            Ty+=0.01;
-        }
-        if(40 === e.keyCode){
-            Ty-=0.01;
-        }
+        // if(38 === e.keyCode){
+        //     Ty+=0.01;
+        // }
+        // if(40 === e.keyCode){
+        //     Ty-=0.01;
+        // }
         run();
     } 
 }
